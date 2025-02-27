@@ -1,0 +1,33 @@
+-- Create the Authors table
+CREATE TABLE Authors (
+    AuthorID INT PRIMARY KEY,
+    Name VARCHAR(100),
+    Nationality VARCHAR(50)
+);
+
+-- Create the Books table with a foreign key to Authors
+CREATE TABLE Books (
+    BookID INT PRIMARY KEY,
+    Title VARCHAR(100),
+    AuthorID INT,
+    Genre VARCHAR(50),
+    Available BOOLEAN,
+    FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID)
+);
+
+-- Insert sample data into Authors
+INSERT INTO Authors (AuthorID, Name, Nationality) VALUES
+(1, 'George Orwell', 'British'),
+(2, 'Harper Lee', 'American');
+
+-- Insert sample data into Books
+INSERT INTO Books (BookID, Title, AuthorID, Genre, Available) VALUES
+(1, '1984', 1, 'Dystopian', TRUE),
+(2, 'Animal Farm', 1, 'Political Satire', FALSE),
+(3, 'To Kill a Mockingbird', 2, 'Fiction', TRUE);
+
+-- Retrieve all available books along with their author details
+SELECT B.Title, A.Name AS Author, B.Genre
+FROM Books B
+JOIN Authors A ON B.AuthorID = A.AuthorID
+WHERE B.Available = TRUE;
